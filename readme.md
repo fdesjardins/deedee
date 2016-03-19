@@ -8,7 +8,7 @@ A tool for detecting dependencies.
 ## Supports
 
 - [x] Node.js
-- [ ] Bower
+- [x] Bower
 - [ ] Inline `<script>` tags
 - [ ] Ruby
 - [ ] Python
