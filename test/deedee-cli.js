@@ -4,6 +4,8 @@ import chai from 'chai';
 import { exec } from 'child-process-promise';
 import 'babel-polyfill';
 
+import * as deedeecli from '../src/deedee-cli.js';
+
 import config from '../package.json';
 
 chai.should();
