@@ -14,7 +14,7 @@ const argv = yargs
   .argv;
 
 const options = {
-  path: argv._[0],
+	path: argv._[0]
 };
 
 deedee(options);
