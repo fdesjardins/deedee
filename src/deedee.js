@@ -1,41 +1,50 @@
 import fs from 'fs';
 import os from 'os';
 import chalk from 'chalk';
+import table from 'text-table';
 
 function detectNodeDependencies(json) {
 	console.log(chalk.bgBlue('Node.js: devDependencies'));
+	var out = [];
 	for (const dep in json.devDependencies) {
 		if (json.devDependencies.hasOwnProperty(dep)) {
-			console.log(chalk.blue(`${dep} ${json.devDependencies[dep]}`));
+			out.push([chalk.blue(dep), chalk.blue(json.devDependencies[dep])]);
 		}
 	}
+	console.log(table(out));
 }
 
 function detectNodeDevDependencies(json) {
 	console.log(chalk.bgGreen('Node.js: dependencies'));
+	var out = [];
 	for (const dep in json.dependencies) {
 		if (json.dependencies.hasOwnProperty(dep)) {
-			console.log(chalk.green(`${dep} ${json.dependencies[dep]}`));
+			out.push([chalk.green(dep), chalk.green(json.dependencies[dep])]);
 		}
 	}
+	console.log(table(out));
 }
 
 function detectBowerDependencies(json) {
 	console.log(chalk.bgRed("Bower: dependencies"));
+	var out = [];
 	for (const dep in json.dependencies) {
 		if (json.dependencies.hasOwnProperty(dep)) {
-			console.log(chalk.red(`${dep} ${json.dependencies[dep]}`));
+			out.push([chalk.red(dep), chalk.red(json.dependencies[dep])]);
 		}
 	}
+	console.log(table(out));
 }
 
 function detectBowerDevDependencies(json) {
 	console.log(chalk.bgMagenta("Bower: devDependencies"));
+	var out = [];
 	for (const dep in json.devDependencies) {
 		if (json.dependencies.hasOwnProperty(dep)) {
-			console.log(chalk.magenta(`${dep} ${json.dependencies[dep]}`));
+			out.push([chalk.magenta(dep), chalk.magenta(json.dependencies[dep])]);
 		}
 	}
+	console.log(table(out));
 }
 
 export default function (options) {
