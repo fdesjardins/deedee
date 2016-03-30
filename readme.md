@@ -18,6 +18,10 @@ A tool for detecting dependencies.
 - [ ] DNX
 - [ ] ...
 
+## Features
+
+- [x] Recursive/Nested Projects
+
 ## Installation
 
 ```

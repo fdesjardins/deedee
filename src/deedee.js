@@ -1,10 +1,11 @@
 import fs from 'fs';
 import os from 'os';
+import path from 'path';
 import chalk from 'chalk';
 import table from 'text-table';
+import walk from 'walk';
 
 function detectNodeDependencies(json) {
-	console.log(chalk.bgBlue('Node.js: devDependencies'));
 	var out = [];
 	for (const dep in json.devDependencies) {
 		if (json.devDependencies.hasOwnProperty(dep)) {
@@ -15,7 +16,6 @@ function detectNodeDependencies(json) {
 }
 
 function detectNodeDevDependencies(json) {
-	console.log(chalk.bgGreen('Node.js: dependencies'));
 	var out = [];
 	for (const dep in json.dependencies) {
 		if (json.dependencies.hasOwnProperty(dep)) {
@@ -26,7 +26,6 @@ function detectNodeDevDependencies(json) {
 }
 
 function detectBowerDependencies(json) {
-	console.log(chalk.bgRed("Bower: dependencies"));
 	var out = [];
 	for (const dep in json.dependencies) {
 		if (json.dependencies.hasOwnProperty(dep)) {
@@ -37,7 +36,6 @@ function detectBowerDependencies(json) {
 }
 
 function detectBowerDevDependencies(json) {
-	console.log(chalk.bgMagenta("Bower: devDependencies"));
 	var out = [];
 	for (const dep in json.devDependencies) {
 		if (json.dependencies.hasOwnProperty(dep)) {
@@ -47,46 +45,68 @@ function detectBowerDevDependencies(json) {
 	console.log(table(out));
 }
 
-export default function (options) {
-	const packageJsonPath = `${options.path}/package.json`;
-	const bowerJsonPath = `${options.path}/bower.json`;
-
-	if (fs.existsSync(packageJsonPath)) {
-		console.log(os.EOL);
-
-		const packageJson = JSON.parse(fs.readFileSync(packageJsonPath));
-
-		detectNodeDependencies(packageJson);
-
-		console.log(os.EOL);
-
-		detectNodeDevDependencies(packageJson);
-	}
-
-	if (fs.existsSync(bowerJsonPath)) {
-		console.log(os.EOL);
-
-		const bowerJson = JSON.parse(fs.readFileSync(`${options.path}/bower.json`));
-
-		detectBowerDependencies(bowerJson);
-
-		console.log(os.EOL);
-
-		detectBowerDevDependencies(bowerJson);
-	}
+function detectNode(root) {
+	let configPath = path.join(root, 'package.json');
+	let packageJson = JSON.parse(fs.readFileSync(configPath));
+	let projectName = packageJson.name;
 
 	console.log(os.EOL);
 
-	if (fs.existsSync(bowerJsonPath)) {
-		console.log(os.EOL);
+	console.log(chalk.bgBlue(`${projectName} - package.json (dependencies)`));
+	detectNodeDependencies(packageJson);
+	console.log(os.EOL);
 
-		const bowerJson = JSON.parse(fs.readFileSync(`${options.path}/bower.json`));
+	console.log(chalk.bgGreen(`${projectName} - package.json (devDependencies)`));
+	detectNodeDevDependencies(packageJson);
+}
 
-		detectBowerDependencies(bowerJson);
+function detectBower (root, filename) {
+	let configPath = path.join(root, 'bower.json');
+	let bowerJson = JSON.parse(fs.readFileSync(configPath));
+	let projectName = bowerJson.name;
 
-		console.log(os.EOL);
+	console.log(os.EOL);
 
-		detectBowerDevDependencies(bowerJson);
+	console.log(chalk.bgRed(`${projectName} - bower.json (dependencies)`));
+	detectBowerDependencies(bowerJson);
+	console.log(os.EOL);
+
+	console.log(chalk.bgMagenta(`${projectName} - bower.json (devDependencies)`));
+	detectBowerDevDependencies(bowerJson);
+}
+
+export default function (options) {
+
+	if (options.recursive) {
+
+		var walker = walk.walk(options.path, {
+			followLinks: false,
+			filters: ['node_modules', 'bower_components']
+		});
+
+		walker.on('file', (root, fstat, next) => {
+			if (fstat.name == 'package.json') {
+				detectNode(root);
+			}
+
+			if (fstat.name == 'bower.json') {
+				detectBower(root);
+			}
+			next();
+		});
+
+	}
+	else {
+		const packageJsonPath = `${options.path}/package.json`;
+		const bowerJsonPath = `${options.path}/bower.json`;
+
+		if (fs.existsSync(packageJsonPath)) {
+			detectNode(options.path);
+		}
+
+		if (fs.existsSync(bowerJsonPath)) {
+			detectBower(options.path);
+		}
 	}
 
 	console.log(os.EOL);
