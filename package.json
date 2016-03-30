@@ -1,6 +1,6 @@
 {
   "name": "deedee",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A tool for detecting project dependencies.",
   "license": "MIT",
   "repository": "fdesjardins/deedee",
