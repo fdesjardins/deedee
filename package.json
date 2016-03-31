@@ -10,11 +10,12 @@
   "scripts": {
     "build": "babel src/ -d lib/",
     "precoverage": "npm run build",
-    "coverage": "./node_modules/.bin/babel-node ./node_modules/.bin/babel-istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -R spec",
+    "coverage": "./node_modules/.bin/babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
     "precoveralls": "npm run coverage",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "coveralls": "cat ./coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js",
     "prepublish": "npm run build",
-    "test": "npm run build && mocha --compilers js:babel-core/register"
+    "pretest": "npm run build",
+    "test": "mocha --compilers js:babel-core/register"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",

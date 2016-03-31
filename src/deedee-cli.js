@@ -5,9 +5,8 @@ import deedee from './deedee.js';
 
 import config from '../package.json';
 
-const argv = yargs
+let cli = yargs
   .usage('Detects project dependencies.\nUsage: deedee [path-to-project] [options]')
-	.demand(1)
 	.example('deedee ~/npm/yargs -r')
   .help('help')
 	.alias('h', 'help')
@@ -16,7 +15,12 @@ const argv = yargs
 	.describe('r', 'Detects dependencies in nested projects')
 	.version('v', config.version)
 	.alias('v', 'version')
-  .argv;
+
+if (require.main === module) {
+	cli.demand(1);
+}
+
+const argv = cli.argv;
 
 const options = {
 	path: argv._[0],

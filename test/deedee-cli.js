@@ -4,6 +4,8 @@ import chai from 'chai';
 import { exec } from 'child-process-promise';
 import 'babel-polyfill';
 
+import * as deedee from '../lib/deedee-cli.js';
+
 import config from '../package.json';
 
 chai.should();
@@ -27,6 +29,6 @@ describe('deedee', () => {
 		exec('node ./lib/deedee-cli.js')
 			.then(proc => {
 				proc.stdout.should.match(/Not enough non-option arguments/);
-			})
+			});
 	});
 });
