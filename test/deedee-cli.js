@@ -1,9 +1,7 @@
 /* global describe, it */
 
 import chai from 'chai';
-import {
-  exec
-} from 'child-process-promise';
+import { exec } from 'child-process-promise';
 import 'babel-polyfill';
 
 import config from '../package.json';
@@ -23,5 +21,12 @@ describe('deedee', () => {
 			.then(proc => {
 				proc.stdout.should.match(config.version);
 			});
+	});
+
+	it('should demand at least one non-option argument', () => {
+		exec('node ./lib/deedee-cli.js')
+			.then(proc => {
+				proc.stdout.should.match(/Not enough non-option arguments/);
+			})
 	});
 });
