@@ -1,8 +1,9 @@
 # deedee
+![](https://img.shields.io/npm/v/deedee.svg?style=flat-square)
 ![](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 ![](https://img.shields.io/travis/fdesjardins/deedee.svg?style=flat-square)
-![](https://img.shields.io/npm/v/deedee.svg?style=flat-square)
 ![](https://img.shields.io/coveralls/fdesjardins/deedee.svg?style=flat-square)
+![](https://img.shields.io/david/fdesjardins/deedee.svg?style=flat-square)
 
 A tool for detecting dependencies.
 
