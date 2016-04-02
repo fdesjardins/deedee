@@ -3,8 +3,15 @@
   "version": "1.0.3",
   "description": "A tool for detecting project dependencies.",
   "license": "MIT",
-  "repository": "fdesjardins/deedee",
+  "repository": "https://github.com/fdesjardins/deedee",
   "homepage": "https://github.com/fdesjardins/deedee",
+  "keywords": [
+    "detect",
+    "dependencies",
+    "libraries",
+    "node",
+    "bower"
+  ],
   "main": "lib/deedee.js",
   "bin": "lib/deedee-cli.js",
   "scripts": {
