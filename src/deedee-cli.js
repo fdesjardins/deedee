@@ -14,7 +14,7 @@ let cli = yargs
 	.alias('r', 'recursive')
 	.describe('r', 'Detects dependencies in nested projects')
 	.version('v', config.version)
-	.alias('v', 'version')
+	.alias('v', 'version');
 
 if (require.main === module) {
 	cli.demand(1);

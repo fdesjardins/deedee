@@ -53,8 +53,7 @@ function print(deps) {
 			})));
 			console.log(os.EOL);
 		}
-	}
-	else if (deps.type === 'bower') {
+	}	else if (deps.type === 'bower') {
 		if (deps.dependencies.length > 0) {
 			const titleColor = colorMap.bower.dependencies.title;
 			console.log(titleColor(`${deps.projectName} - bower.json (dependencies)`));
@@ -99,7 +98,7 @@ function detectNode(root) {
 	};
 }
 
-function detectBower (root, filename) {
+function detectBower(root) {
 	let configPath = path.join(root, 'bower.json');
 	let bowerJson = JSON.parse(fs.readFileSync(configPath));
 	let projectName = bowerJson.name;
@@ -113,29 +112,25 @@ function detectBower (root, filename) {
 }
 
 export default function (options) {
-
 	console.log(os.EOL);
 
 	if (options.recursive) {
-
 		var walker = walk.walk(options.path, {
 			followLinks: false,
 			filters: ['node_modules', 'bower_components']
 		});
 
 		walker.on('file', (root, fstat, next) => {
-			if (fstat.name == 'package.json') {
+			if (fstat.name === 'package.json') {
 				print(detectNode(root));
 			}
 
-			if (fstat.name == 'bower.json') {
+			if (fstat.name === 'bower.json') {
 				print(detectBower(root));
 			}
 			next();
 		});
-
-	}
-	else {
+	}	else {
 		const packageJsonPath = `${options.path}/package.json`;
 		const bowerJsonPath = `${options.path}/bower.json`;
 
