@@ -28,6 +28,7 @@
     "babel-cli": "^6.6.5",
     "babel-core": "^6.7.2",
     "babel-istanbul": "^0.7.0",
+    "babel-plugin-rewire": "^1.0.0-rc-2",
     "babel-plugin-syntax-async-functions": "^6.5.0",
     "babel-plugin-transform-regenerator": "^6.6.5",
     "babel-polyfill": "^6.7.2",

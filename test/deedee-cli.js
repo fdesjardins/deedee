@@ -10,7 +10,7 @@ import config from '../package.json';
 
 chai.should();
 
-describe('deedee', () => {
+describe('deedee-cli', () => {
 	it('should display the help screen', () => {
 		exec('node ./lib/deedee-cli.js --help')
 		.then(proc => {
