@@ -1,7 +1,10 @@
 /* global describe, it */
 
 import chai from 'chai';
+import sinon from 'sinon';
+import stripAnsi from 'strip-ansi';
 import 'babel-polyfill';
+import deedee from '../lib/deedee.js';
 
 import * as packageJson from './fixture/package.json';
 import * as bowerJson from './fixture/bower.json';
@@ -11,6 +14,37 @@ import { __RewireAPI__ as deedeeRewireAPI } from '../lib/deedee.js';
 chai.should();
 
 describe('deedee', () => {
+
+	describe('output', () => {
+		before(() => {
+			sinon.stub(console, 'log').returns(void 0);
+		});
+
+		after(() => {
+			console.log.restore();
+		});
+
+		it('should write dependencies to the console', () => {
+			const options = {
+				path: __dirname + '/fixture',
+				recursive: false
+			};
+			deedee(options);
+
+			console.log.called.should.be.true;
+
+			// strip the chalk ansi color codes from the output
+			const output = stripAnsi(console.log.args.toString());
+			output.should.match(/package.json/);
+			output.should.match(/(dependencies)/);
+			output.should.match(/glob/);
+			output.should.match(/\^1.3.0/);
+			output.should.match(/bower.json/);
+			output.should.match(/(devDependencies)/);
+			output.should.match(/moment/);
+			output.should.match(/\^2.12.0/);
+		});
+	});
 
 	const extractNodeOrBower = deedeeRewireAPI.__get__('extractNodeOrBower');
 

@@ -40,7 +40,9 @@
     "eslint-config-xo": "^0.12.0",
     "istanbul": "^1.0.0-alpha.2",
     "mocha": "^2.4.5",
-    "mocha-lcov-reporter": "^1.2.0"
+    "mocha-lcov-reporter": "^1.2.0",
+    "sinon": "^1.17.3",
+    "strip-ansi": "^3.0.1"
   },
   "dependencies": {
     "bluebird": "^3.3.4",
