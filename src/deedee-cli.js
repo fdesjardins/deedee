@@ -2,6 +2,7 @@
 
 import yargs from 'yargs';
 import deedee from './deedee.js';
+import { printToConsole } from './output.js';
 
 import config from '../package.json';
 
@@ -27,4 +28,4 @@ const options = {
 	recursive: argv.recursive
 };
 
-deedee(options);
+deedee(options).then(deps => printToConsole(deps));

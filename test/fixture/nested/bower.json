@@ -1,0 +1,14 @@
+{
+  "name": "nested",
+  "description": "A nested bower.json",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.2",
+    "font-awesome": "fontawesome#^4.5.0"
+  },
+  "devDependencies": {
+    "moment": "^2.12.0",
+    "async": "^1.5.2",
+    "immutable": "^3.7.6"
+  }
+}

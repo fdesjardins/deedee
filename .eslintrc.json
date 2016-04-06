@@ -1,6 +1,7 @@
 {
 	"extends": "xo",
 	"rules": {
-		"object-curly-spacing": 0
+		"object-curly-spacing": 0,
+		"no-unused-expressions": 0
 	}
 }

@@ -1,80 +1,8 @@
 import fs from 'fs';
-import os from 'os';
 import path from 'path';
-import chalk from 'chalk';
-import table from 'text-table';
 import walk from 'walk';
 import _ from 'lodash';
-
-const colorMap = {
-	node: {
-		dependencies: {
-			title: chalk.underline.blue,
-			item: chalk.blue
-		},
-		devDependencies: {
-			title: chalk.underline.green,
-			item: chalk.green
-		}
-	},
-	bower: {
-		dependencies: {
-			title: chalk.underline.red,
-			item: chalk.red
-		},
-		devDependencies: {
-			title: chalk.underline.magenta,
-			item: chalk.magenta
-		}
-	}
-};
-
-function print(deps) {
-	var dependencies = deps.dependencies;
-	var devDependencies = deps.devDependencies;
-
-	if (deps.type === 'node') {
-		if (deps.dependencies.length > 0) {
-			const titleColor = colorMap.node.dependencies.title;
-			console.log(titleColor(`${deps.projectName} - package.json (dependencies)`));
-			console.log(table(_.map(dependencies, dep => {
-				const itemColor = colorMap.node.dependencies.item;
-				return [itemColor(dep.name), itemColor(dep.version)];
-			})));
-			console.log(os.EOL);
-		}
-
-		if (deps.devDependencies.length > 0) {
-			const titleColor = colorMap.node.devDependencies.title;
-			console.log(titleColor(`${deps.projectName} - package.json (devDependencies)`));
-			console.log(table(_.map(devDependencies, dep => {
-				const itemColor = colorMap.node.devDependencies.item;
-				return [itemColor(dep.name), itemColor(dep.version)];
-			})));
-			console.log(os.EOL);
-		}
-	}	else if (deps.type === 'bower') {
-		if (deps.dependencies.length > 0) {
-			const titleColor = colorMap.bower.dependencies.title;
-			console.log(titleColor(`${deps.projectName} - bower.json (dependencies)`));
-			console.log(table(_.map(dependencies, dep => {
-				const itemColor = colorMap.bower.dependencies.item;
-				return [itemColor(dep.name), itemColor(dep.version)];
-			})));
-			console.log(os.EOL);
-		}
-
-		if (deps.devDependencies.length > 0) {
-			const titleColor = colorMap.bower.devDependencies.title;
-			console.log(titleColor(`${deps.projectName} - bower.json (devDependencies)`));
-			console.log(table(_.map(devDependencies, dep => {
-				const itemColor = colorMap.bower.devDependencies.item;
-				return [itemColor(dep.name), itemColor(dep.version)];
-			})));
-			console.log(os.EOL);
-		}
-	}
-}
+import Promise from 'bluebird';
 
 function extractNodeOrBower(json, fieldName) {
 	return _.map(json[fieldName], (version, name) => {
@@ -112,7 +40,7 @@ function detectBower(root) {
 }
 
 export default function (options) {
-	console.log(os.EOL);
+	let deps = [];
 
 	if (options.recursive) {
 		var walker = walk.walk(options.path, {
@@ -122,11 +50,11 @@ export default function (options) {
 
 		walker.on('file', (root, fstat, next) => {
 			if (fstat.name === 'package.json') {
-				print(detectNode(root));
+				deps.push(detectNode(root));
 			}
 
 			if (fstat.name === 'bower.json') {
-				print(detectBower(root));
+				deps.push(detectBower(root));
 			}
 			next();
 		});
@@ -135,11 +63,13 @@ export default function (options) {
 		const bowerJsonPath = `${options.path}/bower.json`;
 
 		if (fs.existsSync(packageJsonPath)) {
-			print(detectNode(options.path));
+			deps.push(detectNode(options.path));
 		}
 
 		if (fs.existsSync(bowerJsonPath)) {
-			print(detectBower(options.path));
+			deps.push(detectBower(options.path));
 		}
 	}
+
+	return Promise.resolve(deps);
 }

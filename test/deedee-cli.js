@@ -2,9 +2,10 @@
 
 import chai from 'chai';
 import { exec } from 'child-process-promise';
+import stripAnsi from 'strip-ansi';
 import 'babel-polyfill';
 
-import * as deedee from '../lib/deedee-cli.js';
+import '../lib/deedee-cli.js';
 
 import config from '../package.json';
 
@@ -29,6 +30,21 @@ describe('deedee-cli', () => {
 		exec('node ./lib/deedee-cli.js')
 			.then(proc => {
 				proc.stdout.should.match(/Not enough non-option arguments/);
+			});
+	});
+
+	it('should output dependencies to the console', () => {
+		exec('node ./lib/deedee-cli.js -r ./test/fixture')
+			.then(proc => {
+				const output = stripAnsi(proc.stdout);
+				output.should.match(/package.json/);
+				output.should.match(/(dependencies)/);
+				output.should.match(/glob/);
+				output.should.match(/\^1.3.0/);
+				output.should.match(/bower.json/);
+				output.should.match(/(devDependencies)/);
+				output.should.match(/moment/);
+				output.should.match(/\^2.12.0/);
 			});
 	});
 });
