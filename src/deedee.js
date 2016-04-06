@@ -45,7 +45,7 @@ export default function (options) {
 	if (options.recursive) {
 		var walker = walk.walk(options.path, {
 			followLinks: false,
-			filters: ['node_modules', 'bower_components']
+			filters: ['node_modules', 'bower_components', '.git']
 		});
 
 		walker.on('file', (root, fstat, next) => {
@@ -58,17 +58,21 @@ export default function (options) {
 			}
 			next();
 		});
-	}	else {
-		const packageJsonPath = `${options.path}/package.json`;
-		const bowerJsonPath = `${options.path}/bower.json`;
 
-		if (fs.existsSync(packageJsonPath)) {
-			deps.push(detectNode(options.path));
-		}
+		return new Promise(resolve => {
+			walker.on('end', () => resolve(deps));
+		});
+	}
 
-		if (fs.existsSync(bowerJsonPath)) {
-			deps.push(detectBower(options.path));
-		}
+	const packageJsonPath = `${options.path}/package.json`;
+	const bowerJsonPath = `${options.path}/bower.json`;
+
+	if (fs.existsSync(packageJsonPath)) {
+		deps.push(detectNode(options.path));
+	}
+
+	if (fs.existsSync(bowerJsonPath)) {
+		deps.push(detectBower(options.path));
 	}
 
 	return Promise.resolve(deps);
