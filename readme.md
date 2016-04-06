@@ -21,6 +21,14 @@
 
 ## Installation
 
+Use deedee in your project:
+
+```
+$ npm install --save deedee
+```
+
+Or install it globally to use it from the command line:
+
 ```
 $ npm install -g deedee
 ```
@@ -29,6 +37,18 @@ $ npm install -g deedee
 
 ```
 $ deedee path/to/some/awesome/project
+```
+
+```js
+import path from 'path';
+import deedee from '../lib/deedee.js';
+
+deedee({
+	path: path.resolve('..'),
+	recursive: false
+}).then(deps => {
+	console.log(JSON.stringify(deps, null, 2));
+});
 ```
 
 ---
