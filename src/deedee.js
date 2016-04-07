@@ -4,6 +4,15 @@ import walk from 'walk';
 import _ from 'lodash';
 import Promise from 'bluebird';
 
+function extractComposerJson(json, fieldName) {
+	return _.map(json[fieldName], (version, name) => {
+		return {
+			name: name,
+			version: version
+		};
+	});
+}
+
 function extractNodeOrBower(json, fieldName) {
 	return _.map(json[fieldName], (version, name) => {
 		return {
@@ -11,6 +20,19 @@ function extractNodeOrBower(json, fieldName) {
 			version: version
 		};
 	});
+}
+
+function detectComposer(root) {
+	let configPath = path.join(root, 'composer.json');
+	let composerJson = JSON.parse(fs.readFileSync(configPath));
+	let projectName = composerJson.name;
+
+	return {
+		type: 'php (composer)',
+		projectName: projectName,
+		require: extractComposerJson(composerJson, 'require'),
+		'require-dev': extractComposerJson(composerJson, 'require-dev')
+	};
 }
 
 function detectNode(root) {
@@ -43,7 +65,7 @@ export default function (options) {
 	let deps = [];
 
 	if (options.recursive) {
-		var walker = walk.walk(options.path, {
+		const walker = walk.walk(options.path, {
 			followLinks: false,
 			filters: ['node_modules', 'bower_components', '.git']
 		});
@@ -56,6 +78,10 @@ export default function (options) {
 			if (fstat.name === 'bower.json') {
 				deps.push(detectBower(root));
 			}
+
+			if (fstat.name === 'composer.json') {
+				deps.push(detectComposer(root));
+			}
 			next();
 		});
 
@@ -64,8 +90,9 @@ export default function (options) {
 		});
 	}
 
-	const packageJsonPath = `${options.path}/package.json`;
-	const bowerJsonPath = `${options.path}/bower.json`;
+	const packageJsonPath = path.join(options.path, 'package.json');
+	const bowerJsonPath = path.join(options.path, 'bower.json');
+	const composerJsonPath = path.join(options.path, 'composer.json');
 
 	if (fs.existsSync(packageJsonPath)) {
 		deps.push(detectNode(options.path));
@@ -73,6 +100,10 @@ export default function (options) {
 
 	if (fs.existsSync(bowerJsonPath)) {
 		deps.push(detectBower(options.path));
+	}
+
+	if (fs.existsSync(composerJsonPath)) {
+		deps.push(detectComposer(options.path));
 	}
 
 	return Promise.resolve(deps);

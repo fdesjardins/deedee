@@ -11,6 +11,7 @@
 
 - [x] Node.js
 - [x] Bower
+- [x] PHP (Composer)
 - [ ] Inline `<script>` tags
 - [ ] CSS `@import`
 - [ ] Ruby

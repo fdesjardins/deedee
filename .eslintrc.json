@@ -2,6 +2,7 @@
 	"extends": "xo",
 	"rules": {
 		"object-curly-spacing": 0,
-		"no-unused-expressions": 0
+		"no-unused-expressions": 0,
+		"quote-props": 0
 	}
 }
