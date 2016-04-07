@@ -5,8 +5,6 @@ import { exec } from 'child-process-promise';
 import stripAnsi from 'strip-ansi';
 import 'babel-polyfill';
 
-import '../lib/deedee-cli.js';
-
 import config from '../package.json';
 
 chai.should();
