@@ -1,11 +1,17 @@
 # deedee
 
-> A tool for detecting dependencies.
+> A tool for detecting dependencies
 
 [![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Coverage][coveralls-image]][coveralls-url]
 
+Identifying all the dependencies used in a project can be difficult, especially
+when they're spread out across many files and directories. Deedee can locate
+dependencies for a variety of languages and produce a summary of the names of
+those dependencies as well as their versions and other relevant information. This
+information can help highlight a number of issues in projects, such as out-of-date
+libraries, unused dependencies, and problems in package manifest files.
 
 ## Supports
 
