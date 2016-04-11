@@ -25,11 +25,11 @@ function extractNodeOrBower(json, fieldName) {
 function detectComposer(root) {
 	let configPath = path.join(root, 'composer.json');
 	let composerJson = JSON.parse(fs.readFileSync(configPath));
-	let projectName = composerJson.name;
 
 	return {
-		type: 'php (composer)',
-		projectName: projectName,
+		type: 'PHP/Composer',
+		projectName: composerJson.name,
+		path: path.normalize(root),
 		require: extractComposerJson(composerJson, 'require'),
 		'require-dev': extractComposerJson(composerJson, 'require-dev')
 	};
@@ -38,11 +38,11 @@ function detectComposer(root) {
 function detectNode(root) {
 	let configPath = path.join(root, 'package.json');
 	let packageJson = JSON.parse(fs.readFileSync(configPath));
-	let projectName = packageJson.name;
 
 	return {
-		type: 'node',
-		projectName: projectName,
+		type: 'Node.js',
+		projectName: packageJson.name,
+		path: path.normalize(root),
 		dependencies: extractNodeOrBower(packageJson, 'dependencies'),
 		devDependencies: extractNodeOrBower(packageJson, 'devDependencies')
 	};
@@ -51,11 +51,11 @@ function detectNode(root) {
 function detectBower(root) {
 	let configPath = path.join(root, 'bower.json');
 	let bowerJson = JSON.parse(fs.readFileSync(configPath));
-	let projectName = bowerJson.name;
 
 	return {
-		type: 'bower',
-		projectName: projectName,
+		type: 'Bower',
+		projectName: bowerJson.name,
+		path: path.normalize(root),
 		dependencies: extractNodeOrBower(bowerJson, 'dependencies'),
 		devDependencies: extractNodeOrBower(bowerJson, 'devDependencies')
 	};

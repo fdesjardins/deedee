@@ -1,100 +1,70 @@
 import os from 'os';
+import path from 'path';
 import chalk from 'chalk';
 import table from 'text-table';
 import _ from 'lodash';
 
-const colorMap = {
-	node: {
-		dependencies: {
-			title: chalk.underline.blue,
-			item: chalk.blue
-		},
-		devDependencies: {
-			title: chalk.underline.green,
-			item: chalk.green
-		}
-	},
-	bower: {
-		dependencies: {
-			title: chalk.underline.red,
-			item: chalk.red
-		},
-		devDependencies: {
-			title: chalk.underline.magenta,
-			item: chalk.magenta
-		}
-	},
-	composer: {
-		require: {
-			title: chalk.underline.cyan,
-			item: chalk.cyan
-		},
-		'require-dev': {
-			title: chalk.underline.yellow,
-			item: chalk.yellow
-		}
-	}
-};
-
 export function printToConsole(allDependencies) {
+	process.stdout.write(os.EOL);
+
 	for (const deps of allDependencies) {
-		if (deps.type === 'node') {
+		if (deps.type === 'Node.js') {
 			if (deps.dependencies.length > 0) {
-				const titleColor = colorMap.node.dependencies.title;
-				console.log(titleColor(`${deps.projectName} - package.json (dependencies)`));
+				console.log(chalk.yellow(path.join(deps.path, 'package.json')));
+				console.log(`Name: ${deps.projectName}`);
+				console.log(`Type: ${deps.type} (dependencies)\n`);
 				console.log(table(_.map(deps.dependencies, dep => {
-					const itemColor = colorMap.node.dependencies.item;
-					return [itemColor(dep.name), itemColor(dep.version)];
+					return [' ', dep.name, dep.version];
 				})));
 				process.stdout.write(os.EOL);
 			}
 
 			if (deps.devDependencies.length > 0) {
-				const titleColor = colorMap.node.devDependencies.title;
-				console.log(titleColor(`${deps.projectName} - package.json (devDependencies)`));
+				console.log(chalk.yellow(path.join(deps.path, 'package.json')));
+				console.log(`Name: ${deps.projectName}`);
+				console.log(`Type: ${deps.type} (devDependencies)\n`);
 				console.log(table(_.map(deps.devDependencies, dep => {
-					const itemColor = colorMap.node.devDependencies.item;
-					return [itemColor(dep.name), itemColor(dep.version)];
+					return [' ', dep.name, dep.version];
 				})));
 				process.stdout.write(os.EOL);
 			}
-		}	else if (deps.type === 'bower') {
+		}	else if (deps.type === 'Bower') {
 			if (deps.dependencies.length > 0) {
-				const titleColor = colorMap.bower.dependencies.title;
-				console.log(titleColor(`${deps.projectName} - bower.json (dependencies)`));
+				console.log(chalk.yellow(path.join(deps.path, 'bower.json')));
+				console.log(`Name: ${deps.projectName}`);
+				console.log(`Type: ${deps.type} (dependencies)\n`);
 				console.log(table(_.map(deps.dependencies, dep => {
-					const itemColor = colorMap.bower.dependencies.item;
-					return [itemColor(dep.name), itemColor(dep.version)];
+					return [' ', dep.name, dep.version];
 				})));
 				process.stdout.write(os.EOL);
 			}
 
 			if (deps.devDependencies.length > 0) {
-				const titleColor = colorMap.bower.devDependencies.title;
-				console.log(titleColor(`${deps.projectName} - bower.json (devDependencies)`));
+				console.log(chalk.yellow(path.join(deps.path, 'bower.json')));
+				console.log(`Name: ${deps.projectName}`);
+				console.log(`Type: ${deps.type} (devDependencies)\n`);
 				console.log(table(_.map(deps.devDependencies, dep => {
-					const itemColor = colorMap.bower.devDependencies.item;
-					return [itemColor(dep.name), itemColor(dep.version)];
+					return [' ', dep.name, dep.version];
 				})));
 				process.stdout.write(os.EOL);
 			}
-		} else if (deps.type === 'php (composer)') {
+		} else if (deps.type === 'PHP/Composer') {
 			if (deps.require.length > 0) {
-				const titleColor = colorMap.composer.require.title;
-				console.log(titleColor(`${deps.projectName} - composer.json (require)`));
+				console.log(chalk.yellow(path.join(deps.path, 'composer.json')));
+				console.log(`Name: ${deps.projectName}`);
+				console.log(`Type: ${deps.type} (require)\n`);
 				console.log(table(_.map(deps.require, dep => {
-					const itemColor = colorMap.composer.require.item;
-					return [itemColor(dep.name), itemColor(dep.version)];
+					return [' ', dep.name, dep.version];
 				})));
 				process.stdout.write(os.EOL);
 			}
 
 			if (deps['require-dev'].length > 0) {
-				const titleColor = colorMap.composer['require-dev'].title;
-				console.log(titleColor(`${deps.projectName} - composer.json (require-dev)`));
+				console.log(chalk.yellow(path.join(deps.path, 'composer.json')));
+				console.log(`Name: ${deps.projectName}`);
+				console.log(`Type: ${deps.type} (require-dev)\n`);
 				console.log(table(_.map(deps['require-dev'], dep => {
-					const itemColor = colorMap.composer['require-dev'].item;
-					return [itemColor(dep.name), itemColor(dep.version)];
+					return [' ', dep.name, dep.version];
 				})));
 				process.stdout.write(os.EOL);
 			}

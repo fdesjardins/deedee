@@ -43,7 +43,8 @@ describe('deedee', () => {
 			const detectNode = deedeeRewireAPI.__get__('detectNode');
 			detectNode(path.join(__dirname, 'fixture'))
 				.should.deep.equal({
-					type: 'node',
+					type: 'Node.js',
+					path: path.resolve(path.join(__dirname, 'fixture')),
 					projectName: 'test',
 					dependencies: deps,
 					devDependencies: devDeps
@@ -78,7 +79,8 @@ describe('deedee', () => {
 			const detectBower = deedeeRewireAPI.__get__('detectBower');
 			detectBower(path.join(__dirname, 'fixture'))
 				.should.deep.equal({
-					type: 'bower',
+					type: 'Bower',
+					path: path.resolve(path.join(__dirname, 'fixture')),
 					projectName: 'test',
 					dependencies: deps,
 					devDependencies: devDeps
@@ -115,7 +117,8 @@ describe('deedee', () => {
 			const detectComposer = deedeeRewireAPI.__get__('detectComposer');
 			detectComposer(path.join(__dirname, 'fixture'))
 				.should.deep.equal({
-					type: 'php (composer)',
+					type: 'PHP/Composer',
+					path: path.resolve(path.join(__dirname, 'fixture')),
 					projectName: 'laravel/framework',
 					require: composerRequire,
 					'require-dev': composerRequireDev
