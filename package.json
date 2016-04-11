@@ -10,7 +10,9 @@
     "dependencies",
     "libraries",
     "node",
-    "bower"
+    "bower",
+    "php",
+    "composer"
   ],
   "main": "lib/deedee.js",
   "bin": "lib/deedee-cli.js",
