@@ -6,6 +6,7 @@ import 'babel-polyfill';
 
 import * as packageJson from './fixture/package.json';
 import * as bowerJson from './fixture/bower.json';
+import * as composerJson from './fixture/composer.json';
 
 import { __RewireAPI__ as deedeeRewireAPI } from '../lib/deedee.js';
 
@@ -81,6 +82,43 @@ describe('deedee', () => {
 					projectName: 'test',
 					dependencies: deps,
 					devDependencies: devDeps
+				});
+		});
+	});
+
+	describe('composer.json', () => {
+		const extractComposerJson = deedeeRewireAPI.__get__('extractComposerJson');
+
+		const composerRequire = [
+			{ name: 'php', version: '>=5.5.9' },
+			{ name: 'ext-mbstring', version: '*' },
+			{ name: 'ext-openssl', version: '*' }
+		];
+
+		const composerRequireDev = [
+			{ name: 'aws/aws-sdk-php', version: '~3.0' },
+			{ name: 'mockery/mockery', version: '~0.9.2' },
+			{ name: 'pda/pheanstalk', version: '~3.0' }
+		];
+
+		it('should extract requires', () => {
+			extractComposerJson(composerJson, 'require')
+				.should.deep.equal(composerRequire);
+		});
+
+		it('should extract require-devs', () => {
+			extractComposerJson(composerJson, 'require-dev')
+				.should.deep.equal(composerRequireDev);
+		});
+
+		it('should detect composer.json require', () => {
+			const detectComposer = deedeeRewireAPI.__get__('detectComposer');
+			detectComposer(path.join(__dirname, 'fixture'))
+				.should.deep.equal({
+					type: 'php (composer)',
+					projectName: 'laravel/framework',
+					require: composerRequire,
+					'require-dev': composerRequireDev
 				});
 		});
 	});
