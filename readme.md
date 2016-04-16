@@ -1,10 +1,8 @@
-# deedee
+# deedee [![NPM Version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage][coveralls-image]][coveralls-url]
 
 > A tool for detecting dependencies
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Coverage][coveralls-image]][coveralls-url]
+
 
 Identifying all the dependencies used in a project can be difficult, especially
 when they're spread out across many files and directories. Deedee can locate
@@ -28,8 +26,6 @@ libraries, unused dependencies, and problems in package manifest files.
 
 ## Installation
 
-Use deedee in your project:
-
 ```
 $ npm install --save deedee
 ```
@@ -42,9 +38,13 @@ $ npm install -g deedee
 
 ## Usage
 
+The easiest way to use deedee is from the command line:
+
 ```
 $ deedee path/to/some/awesome/project
 ```
+
+You can also easily use it in a project:
 
 ```js
 import path from 'path';
