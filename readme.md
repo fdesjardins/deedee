@@ -1,5 +1,7 @@
 # deedee
 
+[![deedee](media/header.png)]()
+
 [![Build Status][travis-image]][travis-url]
 [![NPM Version][npm-image]][npm-url]
 [![Coverage][coveralls-image]][coveralls-url]
