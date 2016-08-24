@@ -12,7 +12,13 @@
     "node",
     "bower",
     "php",
-    "composer"
+    "composer",
+    "development",
+    "libs",
+    "deps",
+    "resources",
+    "detection",
+    "projects"
   ],
   "main": "lib/deedee.js",
   "bin": "lib/deedee-cli.js",
