@@ -59,6 +59,10 @@ deedee({
 });
 ```
 
+## License
+
+MIT © [Forrest Desjardins](https://github.com/fdesjardins)
+
 [npm-url]: https://www.npmjs.com/package/deedee
 [npm-image]: https://img.shields.io/npm/v/deedee.svg?style=flat
 [travis-url]: https://travis-ci.org/fdesjasrdins/deedee
