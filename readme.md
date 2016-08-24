@@ -1,7 +1,5 @@
 # deedee
 
-[![deedee](media/header.png)]()
-
 [![Build Status][travis-image]][travis-url]
 [![NPM Version][npm-image]][npm-url]
 [![Coverage][coveralls-image]][coveralls-url]
@@ -14,6 +12,8 @@ those dependencies as well as their versions and other relevant information.
 
 This information can help highlight a number of issues in projects, such as out-of-date
 libraries, unused dependencies, and problems in package manifest files.
+
+![](media/header.png)
 
 ## Supports
 
