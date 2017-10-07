@@ -53,7 +53,7 @@
     "strip-ansi": "^4.0.0"
   },
   "dependencies": {
-    "bluebird": "^3.5.0",
+    "bluebird": "^3.5.1",
     "chalk": "^2.1.0",
     "lodash": "^4.17.4",
     "text-table": "^0.2.0",
