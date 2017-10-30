@@ -54,10 +54,10 @@
   },
   "dependencies": {
     "bluebird": "^3.5.1",
-    "chalk": "^2.1.0",
+    "chalk": "^2.3.0",
     "lodash": "^4.17.4",
     "text-table": "^0.2.0",
     "walk": "^2.3.9",
-    "yargs": "^9.0.1"
+    "yargs": "^10.0.3"
   }
 }
