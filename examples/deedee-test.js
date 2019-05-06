@@ -1,9 +1,9 @@
-import path from 'path';
-import deedee from '../lib/deedee.js';
+import path from 'path'
+import deedee from '../lib/deedee.js'
 
 deedee({
-	path: path.resolve('..'),
-	recursive: false
+  path: path.resolve('..'),
+  recursive: false
 }).then(deps => {
-	console.log(JSON.stringify(deps, null, 2));
-});
+  console.log(JSON.stringify(deps, null, 2))
+})
