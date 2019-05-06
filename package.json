@@ -1,7 +1,7 @@
 {
   "name": "deedee",
   "description": "A tool for detecting dependencies",
-  "version": "1.4.38",
+  "version": "1.4.39",
   "author": {
     "name": "Forrest Desjardins",
     "email": "desjardinsfg@gmail.com",
