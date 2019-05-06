@@ -42,7 +42,20 @@ $ npm install -g deedee
 The easiest way to use deedee is from the command line:
 
 ```
-$ deedee path/to/some/awesome/project
+$ deedee ./node_modules/growl
+```
+
+### Output
+
+```
+node_modules/growl/package.json
+Name: growl
+Type: Node.js (devDependencies)
+
+   eslint                     ^4.8.0
+   eslint-config-airbnb-base  ^12.0.1
+   eslint-plugin-import       ^2.7.0
+   eslint-plugin-node         ^5.2.0
 ```
 
 You can also easily use it in a project:
